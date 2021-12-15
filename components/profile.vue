@@ -1,49 +1,78 @@
 <template>
-  <form class="form-widget" @submit.prevent="updateProfile">
-    <div>
-      <label for="email">Email</label>
-      {{ user}}
-    </div>
-    <div>
-      <label for="username">Name</label>
-      <input id="username" type="text" v-model="username" />
-    </div>
-    <div>
-      <label for="website">Website</label>
-      <input id="website" type="website" v-model="website" />
+  <div class="shitDiv">
+    <div class="w-10/12 h-auto grid grid-rows-4 grid-cols-1 place-items-center">
+      <div class="imgContainer ">
+        <img
+          class="w-40 h-40 border-4 rounded-full shadow-2xl"
+          :src="imgUrl"
+          alt=""
+        />
+        <AvatarFile class="" :path="avatar_url" @upload="updateProfile" />
+      </div>
+
+      <div class="emailBox ">
+        <label class="self-center font-bold p-4" for="email">Email</label>
+        <input v-if="user" v-model="user.email" type="email" disabled />
+      </div>
+
+      <div class="displayName ">
+        <label class="font-bold p-4" for="username">Name</label>
+        <input
+          id="username"
+          v-model="username"
+          class="p-4 rounded"
+          type="text"
+        />
+      </div>
+
+      <div class="websiteBox ">
+        <label class="p-4 font-bold" for="website">Website</label>
+        <input
+          id="website"
+          v-model="website"
+          class="p-4 rounded"
+          type="website"
+        />
+      </div>
     </div>
 
     <div>
-      <input
-        type="submit"
-        class="button block primary"
-        :value="loading ? 'Loading ...' : 'Update'"
-        :disabled="loading"
-      />
+      <button @click.prevent="updateProfile">update</button>
     </div>
-
-    <div>
-      <button class="button block" @click="signOut" :disabled="loading">
-        Sign Out
-      </button>
-    </div>
-  </form>
+  </div>
 </template>
 
 <script>
+import AvatarFile from '../pages/AvatarFile.vue'
+
 export default {
+  components: {
+    AvatarFile,
+  },
   data() {
     return {
       loading: false,
       username: '',
       website: '',
       avatar_url: '',
+      email: '',
+      imgUrl: '',
     }
   },
 
+  computed: {
+    user() {
+      return this.$store.state.user
+    },
+  },
+
+  watch: {
+    imgUrl() {
+      this.downloadImage()
+    },
+  },
   created() {
     this.getProfile()
-    console.log(this.user);
   },
 
   methods: {
@@ -61,6 +90,7 @@ export default {
         if (error && status !== 406) throw error
 
         if (data) {
+          console.log(data)
           this.username = data.username
           this.website = data.website
           this.avatar_url = data.avatar_url
@@ -68,13 +98,21 @@ export default {
       } catch (error) {
         alert(error.message)
       } finally {
+        this.downloadImage()
         this.loading = false
       }
     },
-    computed: {
-      user() {
-        return this.$supabase.auth.user()
-      },
+
+    async downloadImage() {
+      try {
+        const { data, error } = await this.$supabase.storage
+          .from('avatars')
+          .download(this.avatar_url)
+        if (error) throw error
+        this.imgUrl = URL.createObjectURL(data)
+      } catch (error) {
+        console.error('Error downloading image: ', error.message)
+      }
     },
 
     async updateProfile() {
@@ -117,3 +155,11 @@ export default {
   },
 }
 </script>
+
+<style scoped>
+.shitDiv {
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+}
+</style>

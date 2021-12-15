@@ -1,7 +1,13 @@
 <template>
   <div>
-    <NuxtLink to="/loginPage">Login</NuxtLink>
-     <NuxtLink to="/avatar">avatar</NuxtLink>
-      <NuxtLink to="/profile">profile</NuxtLink>
+    <TheNavbar />
   </div>
 </template>
+
+<script>
+import TheNavbar from '../layout/TheNavbar.vue'
+export default {
+  components:{TheNavbar}
+  
+}
+</script>

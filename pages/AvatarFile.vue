@@ -1,20 +1,7 @@
 <template>
-  <div>
-    <img
-      v-if="src"
-      :src="src"
-      alt="Avatar"
-      class="avatar image"
-      :style="{ height: size, width: size }"
-    />
-    <div
-      v-else
-      class="avatar no-image"
-      :style="{ height: size, width: size }"
-    />
-
-    <div :style="{ width: size }">
-      <label class="button primary block" for="single">
+  <div class="m-5 cursor-pointer">
+    <div class=" shadow-xl text-white bg-Rose-500 p-3 rounded-3xl ">
+      <label class="font-bold cursor-pointer button primary block" for="single">
         {{ uploading ? 'Uploading ...' : 'Upload' }}
       </label>
       <input
@@ -34,7 +21,7 @@ export default {
   props: {
     path: String,
   },
-
+  emits: ['upload', 'update:path'],
   data() {
     return {
       pathData: this.path,
@@ -42,28 +29,28 @@ export default {
       uploading: false,
       src: '',
       files: null,
+      avatarPath: '',
     }
   },
 
-mounted(){
-  this.downloadImage()
-  console.log(this.pathData);
-},
+  mounted() {
+    console.log(this.pathData)
+  },
 
   methods: {
-    async downloadImage() {
-      try {
-        const { data, error } = await this.$supabase.storage
-          .from('avatars')
-          .download(this.pathData)
-        if (error) throw error
-        this.src = URL.createObjectURL(data)
-        console.log(this.pathData)
-        console.log(this.src)
-      } catch (error) {
-        console.error('Error downloading image: ', error.message)
-      }
-    },
+    // async downloadImage() {
+    //   try {
+    //     const { data, error } = await this.$supabase.storage
+    //       .from('avatars')
+    //       .download(this.pathData)
+    //     if (error) throw error
+    //     this.src = URL.createObjectURL(data)
+    //     console.log(this.path)
+    //     console.log(this.src)
+    //   } catch (error) {
+    //     console.error('Error downloading image: ', error.message)
+    //   }
+    // },
 
     async uploadAvatar(evt) {
       this.files = evt.target.files[0]
@@ -77,17 +64,29 @@ mounted(){
         const fileExt = file.name.split('.').pop()
         const fileName = `${Math.random()}.${fileExt}`
         const filePath = `${fileName}`
+        this.avatarPath = filePath
 
         const { error: uploadError } = await this.$supabase.storage
           .from('avatars')
           .upload(filePath, file)
 
         if (uploadError) throw uploadError
+        this.$emit('update:path', filePath)
+        this.$emit('upload')
       } catch (error) {
         alert(error.message)
       } finally {
         this.uploading = false
       }
+      const update = {
+        avatar_url: this.avatarPath,
+      }
+      const { error: updateError } = await this.$supabase
+        .from('profiles')
+        .update(update)
+        .eq('id', this.$store.state.user.id)
+
+      if (updateError) throw updateError
     },
   },
 }
