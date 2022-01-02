@@ -1,53 +1,62 @@
 <template>
-  <div class="shitDiv">
-    <div class="w-10/12 h-auto grid grid-rows-4 grid-cols-1 place-items-center">
-      <div class="imgContainer ">
-        <img
-          class="w-40 h-40 border-4 rounded-full shadow-2xl"
-          :src="imgUrl"
-          alt=""
-        />
-        <AvatarFile class="" :path="avatar_url" @upload="updateProfile" />
+  <div class="mainContainer w-full h-full">
+    <div class=" w-screen h-full">
+      <div class="w-screen">
+        <img class="max-h-2/3" :src="imgUrl" alt="" />
+        <div class="transform -translate-y-12 flex flex-row justify-center">
+          <div class="profilePic w-28 h-28 bg-gray-200 rounded-full"></div>
+        </div>
       </div>
-
-      <div class="emailBox ">
-        <label class="self-center font-bold p-4" for="email">Email</label>
-        <input v-if="user" v-model="user.email" type="email" disabled />
+      <div class="w-screen p-2 flex justify-center">
+        <div class="w-1/2 flex flex-col justify-center items-center">
+          <UploadAvatar :path="avatar_url" />
+          <button
+            class="updateButton text-white rounded-3xl font-bold w-32 h-12 shadow-xl p-3 m-2"
+            @click="updateProfile"
+          >
+            Update
+          </button>
+            <button
+            class="updateButton text-white rounded-3xl font-bold w-32 h-12 shadow-xl p-3 m-2"
+            @click="signOut"
+          >
+            Sign Out
+          </button>
+        </div>
       </div>
-
-      <div class="displayName ">
-        <label class="font-bold p-4" for="username">Name</label>
+      <div
+        class="w-full flex flex-col justify-start items-center trasform translate-y-8"
+      >
         <input
-          id="username"
           v-model="username"
-          class="p-4 rounded"
+          class="userInputs m-1 p-3 border-2 rounded-2xl bg-darkPurple text-black"
           type="text"
+          placeholder="Username"
         />
-      </div>
-
-      <div class="websiteBox ">
-        <label class="p-4 font-bold" for="website">Website</label>
         <input
-          id="website"
+          v-if="user"
+          v-model="user.email"
+          class="userInputs m-1 p-3 border-2 rounded-2xl bg-darkPurple text-black"
+          type="email"
+          placeholder="Email"
+        />
+        <input
           v-model="website"
-          class="p-4 rounded"
-          type="website"
+          class="userInputs m-1 p-3 border-2 rounded-2xl bg-darkPurple text-black"
+          type="text"
+          placeholder="Website"
         />
       </div>
-    </div>
-
-    <div>
-      <button @click.prevent="updateProfile">update</button>
     </div>
   </div>
 </template>
 
 <script>
-import AvatarFile from '../pages/AvatarFile.vue'
+import UploadAvatar from '../components/UploadAvatar.vue'
 
 export default {
   components: {
-    AvatarFile,
+    UploadAvatar,
   },
   data() {
     return {
@@ -66,12 +75,7 @@ export default {
     },
   },
 
-  watch: {
-    imgUrl() {
-      this.downloadImage()
-    },
-  },
-  created() {
+  mounted() {
     this.getProfile()
   },
 
@@ -157,9 +161,22 @@ export default {
 </script>
 
 <style scoped>
-.shitDiv {
+.mainContainer {
+  background: #001524;
   width: 100%;
-  height: 100%;
-  overflow: hidden;
+}
+
+.updateButton {
+  background-color: #2EC4B6;
+  color: #000000;
+}
+
+.userInputs {
+  background-color: #dae8ec;
+  border: solid #2EC4B6 2px;
+}
+
+.profilePic {
+  border: solid #2EC4B6 2px;
 }
 </style>

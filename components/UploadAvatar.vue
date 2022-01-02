@@ -1,18 +1,16 @@
 <template>
-  <div class="m-5 cursor-pointer">
-    <div class=" shadow-xl text-white bg-Rose-500 p-3 rounded-3xl ">
-      <label class="font-bold cursor-pointer button primary block" for="single">
-        {{ uploading ? 'Uploading ...' : 'Upload' }}
-      </label>
-      <input
-        style="visibility: hidden; position: absolute"
-        type="file"
-        id="single"
-        accept="image/*"
-        @change="uploadAvatar"
-        :disabled="uploading"
-      />
-    </div>
+  <div class="uploadButton rounded-3xl shadow-xl w-32 h-12 p-3 text-center">
+    <label class="font-bold w-32 h-12 cursor-pointer" for="single">
+      {{ uploading ? 'Uploading ...' : 'Upload' }}
+    </label>
+    <input
+      id="single"
+      style="visibility: hidden"
+      type="file"
+      accept="image/*"
+      :disabled="uploading"
+      @change="uploadAvatar"
+    />
   </div>
 </template>
 
@@ -91,3 +89,10 @@ export default {
   },
 }
 </script>
+
+<style scoped>
+.uploadButton {
+  background-color: #2EC4B6;
+  color: #000000;
+}
+</style>
