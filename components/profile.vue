@@ -8,7 +8,7 @@
         </div>
       </div>
       <div class="w-screen p-2 flex justify-center">
-        <div class="w-1/2 flex flex-col justify-center items-center">
+        <div v-show="user" class="w-1/2 flex flex-col justify-center items-center">
           <UploadAvatar :path="avatar_url" />
           <button
             class="updateButton text-white rounded-3xl font-bold w-32 h-12 shadow-xl p-3 m-2"

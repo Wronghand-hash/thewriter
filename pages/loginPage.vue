@@ -25,6 +25,7 @@
           <component :is="comp" v-bind="currentProps" class="w-full h-full" />
           <div>
             <button
+            v-show="comp === 'Login'"
               class="px-3 font-bold py-3 bg-Amber-500 rounded shadow-2xl m-1"
               @click="toggleComp('RequestPasswordReset')"
             >
