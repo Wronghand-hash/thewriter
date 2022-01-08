@@ -21,6 +21,7 @@
         </div>
         <div class="flex flex-row justify-around text-black font-bold">
           <NuxtLink class="mx-1" to="/loginPage">Login</NuxtLink>
+          <NuxtLink class="mx-1" to="/createpost">Create</NuxtLink>
           <NuxtLink class="mx-1" to="/">Home</NuxtLink>
           <NuxtLink  class="mx-1" to="/profilePage">profile</NuxtLink>
         </div>

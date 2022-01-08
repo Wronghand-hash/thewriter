@@ -25,7 +25,7 @@
           <div class="flex justify-center p-2">
             <input
               type="submit"
-              class="actionButton font-bold px-4 py-2 rounded"
+              class="actionButton cursor-pointer font-bold px-4 py-2 rounded"
               :value="loadingSignUp ? 'Loading' : 'signUp'"
               :disabled="loadingSignUp"
             />

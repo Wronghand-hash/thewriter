@@ -10,12 +10,14 @@
         <div class="flex items-center justify-center w-full h-24">
           <button
             class="px-5 font-bold py-3 bg-Amber-500 rounded shadow-2xl m-1"
+            :class="{ disabled: comp === 'Login'}"
             @click="toggleComp('Login')"
           >
             Login
           </button>
           <button
             class="px-5 font-bold m-1 py-3 bg-Amber-500 rounded shadow-2xl"
+             :class="{ 'bg-Rose-500': comp === 'SignUp'}"
             @click="toggleComp('SignUp')"
           >
             SignUp

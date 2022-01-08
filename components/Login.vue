@@ -6,7 +6,7 @@
           class="w-full h-full flex flex-col justify-center items-center"
           @submit.prevent="handleLogin"
         >
-          <div class="w-2/3">
+          <div class="w-full">
             <input
               v-model="emailLogin"
               class="inputField w-full px-5 py-8 rounded-t-2xl"
@@ -14,7 +14,7 @@
               placeholder="Your email"
             />
           </div>
-          <div class="w-2/3">
+          <div class="w-full">
             <input
               v-model="passwordLogin"
               class="inputField w-full px-5 py-8 rounded-b-2xl"
@@ -25,7 +25,7 @@
           <div class="flex justify-center p-2">
             <input
               type="submit"
-              class="actionButton px-4 py-2 rounded"
+              class="actionButton cursor-pointer font-bold px-4 py-2 rounded"
               :value="loadingLogin ? 'Loading' : 'login'"
               :disabled="loadingLogin"
             />
@@ -69,10 +69,10 @@ export default {
 </script>
 
 <style scoped>
-.actionButton{
-  background-color: #2EC4B6;
+.actionButton {
+  background-color: #2ec4b6;
 }
 
-.mainContainer{
+.mainContainer {
 }
 </style>

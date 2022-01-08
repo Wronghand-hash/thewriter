@@ -1,25 +1,26 @@
 <template>
-  <div class="">
-    <div class="bg-Indigo-500 w-full h-full">
-      <div class="flex justify-center items-center">
-        <form class="" @submit.prevent="passwordReset">
-          <div class="flex flex-col">
-            <div>
-              <input
-                v-model="password"
-                class="inputField p-2"
-                type="password"
-                placeholder="new password"
-              />
-            </div>
-            <div class="flex justify-center p-2">
-              <input
-                type="submit"
-                class="bg-blueGray-300 px-4 py-2 rounded"
-                :value="loading ? 'Loading' : 'Recover your Password'"
-                :disabled="loading"
-              />
-            </div>
+  <div class="p-5">
+    <div class="mainContainer w-full h-full rounded-2xl">
+      <div class="w-full h-full flex justify-center flex-row items-center">
+        <form
+          class="w-full h-full flex flex-col justify-center items-center"
+          @submit.prevent="passwordReset"
+        >
+          <div class="w-full">
+            <input
+              v-model="password"
+              class="inputField w-full px-5 py-8 rounded-t-2xl"
+              type="email"
+              placeholder="new password"
+            />
+          </div>
+          <div class="flex justify-center p-2">
+            <input
+              type="submit"
+              class="actionButton font-bold px-4 py-2 rounded"
+              :value="loading ? 'Updating' : 'Update'"
+              :disabled="loading"
+            />
           </div>
         </form>
       </div>
@@ -59,3 +60,9 @@ export default {
   },
 }
 </script>
+
+<style scoped>
+.actionButton{
+  background-color: #E8AC76;
+}
+</style>
