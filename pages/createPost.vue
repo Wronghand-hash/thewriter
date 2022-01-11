@@ -1,6 +1,7 @@
 <template>
-  <main>
-    <div id="editor">
+  <div class="h-screen mainContainer">
+    <TheNavbar />
+    <div class="grid items-center h-screen w-full" id="editor">
       <h1 class="text-3xl font-semibold tracking-wide mt-6">Create new post</h1>
       <input
         v-model="title"
@@ -22,11 +23,17 @@
         Create Post
       </button>
     </div>
-  </main>
+  </div>
 </template>
 
 <script>
+import TheNavbar from '../layout/TheNavbar.vue'
+
+
 export default {
+  components:{
+    TheNavbar
+  },
   data() {
     return {
       title: '',
